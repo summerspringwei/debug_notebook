@@ -1,6 +1,7 @@
 ## Debug opt passes
 
 ### Reproduce the bug
+LLVM version: `llvmorg-16.0.6`
 
 Run the following command:
 ```shell
@@ -30,7 +31,7 @@ gdb > r -passes='wholeprogramdevirt,loop(no-op-loopnest)' foo.bc -o foo.optbc
 ```
 We can verify that program indeed reaches at this point.
 Note that the PassBuilder recursively parse the `passes` argument.
-All the parse result is stored in the `PipelineElement`, which is defined at `PassBuilder.h:111`.
+All the parse results are stored in the `PipelineElement`, which is defined at `PassBuilder.h:111`.
 
 For our example, for the first time the `Name` is `wholeprogramdevirt`,
 and for the second time `Name` is `loop`.
