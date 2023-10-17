@@ -1,13 +1,16 @@
 #include <iostream>
+#include <vector>
 
 class Student {
 public:
     Student(int id, const char* name, int age);
     void print();
+
 private:
     int id;
     const char* name;
     int age;
+    std::vector<int> friends;
 };
 
 Student::Student(int id, const char* name, int age) {
@@ -17,6 +20,10 @@ Student::Student(int id, const char* name, int age) {
 }
 
 void Student::print(){
+    if(name == NULL){
+        printf("name is null\n");
+        return;
+    }
     printf("id: %d, name: %s, age: %d\n", id, name, age);
 }
 

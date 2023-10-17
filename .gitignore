@@ -54,3 +54,5 @@ dkms.conf
 
 # assembly
 *.s
+*.ll
+*.bc
