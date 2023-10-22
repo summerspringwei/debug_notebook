@@ -9,3 +9,11 @@
 对应文件夹命名为： f"IR-{IR_id}"
 
 最好结果及O3下运行时间：/home/jiayu/cBench_result/ （json文件中的最后一个数字代表O3下的运行时间）
+
+
+## 只包含1-2个源文件的benchmark
+
+* automotive_qsort1
+* automotive_susan_c
+* automotive_susan_e
+* automotive_susan_s
