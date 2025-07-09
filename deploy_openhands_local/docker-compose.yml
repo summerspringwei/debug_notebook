@@ -1,0 +1,44 @@
+services:
+  vllm:
+    container_name: vllm
+    image: vllm/vllm-openai:v0.9.2
+    restart: unless-stopped
+    shm_size: '64gb'
+    command: >
+      --host 0.0.0.0 --task generate 
+      --model /models/Devstral-Small-2505-Q4_K_M.gguf
+      --served-model-name Devstral-Small-2505-Q4_K_M
+      --max-num-seqs 8 --max-model-len 32000 --gpu-memory-utilization 0.95
+      --enable-auto-tool-choice --tool-call-parser mistral --quantization gguf
+      --tool-call-parser mistral
+      --enable-sleep-mode --enable-chunked-prefill
+      --api-key yourapikey
+    environment:
+      # - HUGGING_FACE_HUB_TOKEN=hf_etc...
+      - NVIDIA_DISABLE_REQUIRE=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - ENGINE_ITERATION_TIMEOUT_S=180
+      - VLLM_ALLOW_LONG_MAX_MODEL_LEN=0
+      - VLLM_USE_V1=0
+      - VLLM_SERVER_DEV_MODE=1
+    volumes:
+      - /home/yourname/Downloads/docker_vllm:/models
+      - /home/yourname/Dataset/:/dataset
+    ports:
+      - 9999:8000
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://0.0.0.0:9999/v1/models" ]
+      interval: 30s
+      timeout: 5s
+      retries: 20
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['0']
+              capabilities: [gpu]
+
+networks:
+  ai:
+    name: ai
